@@ -554,7 +554,7 @@
       "name": "Redis",
       "build": {},
       "deploy": {
-        "startCommand": "/bin/sh -c \"exec docker-entrypoint.sh redis-server --requirepass $REDIS_PASSWORD --maxmemory-policy noeviction --appendonly yes --dir /data\"",
+        "startCommand": "/bin/sh -c \"rm -rf /data/lost+found && exec docker-entrypoint.sh redis-server --requirepass $REDIS_PASSWORD --maxmemory-policy noeviction --appendonly yes --dir /data\"",
         "healthcheckPath": null,
         "restartPolicyType": "ON_FAILURE",
         "restartPolicyMaxRetries": 10
