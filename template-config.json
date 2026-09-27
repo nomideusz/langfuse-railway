@@ -1,0 +1,582 @@
+{
+  "buckets": {
+    "de9a9816-82a3-492a-96bc-7ad6ba8f388d": {
+      "name": "Blobs"
+    }
+  },
+  "services": {
+    "61618c27-1168-4650-95d6-b9b085c386f8": {
+      "icon": "https://langfuse.com/icon.svg",
+      "name": "Langfuse",
+      "build": {},
+      "deploy": {
+        "startCommand": null,
+        "healthcheckPath": "/api/public/health",
+        "restartPolicyType": "ON_FAILURE",
+        "restartPolicyMaxRetries": 10
+      },
+      "source": {
+        "image": "langfuse/langfuse:4.46.0"
+      },
+      "variables": {
+        "PORT": {
+          "defaultValue": "3000",
+          "description": "Port Langfuse listens on - leave as is",
+          "isOptional": false
+        },
+        "HOSTNAME": {
+          "defaultValue": "::",
+          "description": "Listen on IPv4 and IPv6 - leave as is",
+          "isOptional": false
+        },
+        "DATABASE_URL": {
+          "defaultValue": "postgresql://${{Postgres.POSTGRES_USER}}:${{Postgres.POSTGRES_PASSWORD}}@${{Postgres.RAILWAY_PRIVATE_DOMAIN}}:5432/${{Postgres.POSTGRES_DB}}",
+          "description": "Postgres connection - private network, leave as is",
+          "isOptional": false
+        },
+        "SALT": {
+          "defaultValue": "${{secret(32)}}",
+          "description": "Salt for hashing API keys - never change after the first deploy",
+          "isOptional": false
+        },
+        "ENCRYPTION_KEY": {
+          "defaultValue": "${{secret(64, \"abcdef0123456789\")}}",
+          "description": "64 hex chars encrypting stored LLM API keys - never change after the first deploy",
+          "isOptional": false
+        },
+        "NEXTAUTH_URL": {
+          "defaultValue": "https://${{RAILWAY_PUBLIC_DOMAIN}}",
+          "description": "Public URL of Langfuse - set it to your custom domain when you add one",
+          "isOptional": false
+        },
+        "CLICKHOUSE_URL": {
+          "defaultValue": "http://${{ClickHouse.RAILWAY_PRIVATE_DOMAIN}}:8123",
+          "description": "ClickHouse HTTP endpoint - private network, leave as is",
+          "isOptional": false
+        },
+        "CLICKHOUSE_MIGRATION_URL": {
+          "defaultValue": "clickhouse://${{ClickHouse.RAILWAY_PRIVATE_DOMAIN}}:9000",
+          "description": "ClickHouse native endpoint for migrations - leave as is",
+          "isOptional": false
+        },
+        "CLICKHOUSE_USER": {
+          "defaultValue": "${{ClickHouse.CLICKHOUSE_USER}}",
+          "description": "ClickHouse user - leave as is",
+          "isOptional": false
+        },
+        "CLICKHOUSE_PASSWORD": {
+          "defaultValue": "${{ClickHouse.CLICKHOUSE_PASSWORD}}",
+          "description": "ClickHouse password - leave as is",
+          "isOptional": false
+        },
+        "CLICKHOUSE_CLUSTER_ENABLED": {
+          "defaultValue": "false",
+          "description": "Single-node ClickHouse",
+          "isOptional": false
+        },
+        "REDIS_HOST": {
+          "defaultValue": "${{Redis.RAILWAY_PRIVATE_DOMAIN}}",
+          "description": "Redis host - private network, leave as is",
+          "isOptional": false
+        },
+        "REDIS_PORT": {
+          "defaultValue": "6379",
+          "description": "Redis port",
+          "isOptional": false
+        },
+        "REDIS_AUTH": {
+          "defaultValue": "${{Redis.REDIS_PASSWORD}}",
+          "description": "Redis password - leave as is",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_EVENT_UPLOAD_BUCKET": {
+          "defaultValue": "${{Blobs.BUCKET}}",
+          "description": "Raw ingested events go to the bundled Railway bucket - leave as is",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_EVENT_UPLOAD_ENDPOINT": {
+          "defaultValue": "${{Blobs.ENDPOINT}}",
+          "description": "Bucket endpoint",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_EVENT_UPLOAD_REGION": {
+          "defaultValue": "${{Blobs.REGION}}",
+          "description": "Bucket region",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_EVENT_UPLOAD_ACCESS_KEY_ID": {
+          "defaultValue": "${{Blobs.ACCESS_KEY_ID}}",
+          "description": "Bucket credentials",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_EVENT_UPLOAD_SECRET_ACCESS_KEY": {
+          "defaultValue": "${{Blobs.SECRET_ACCESS_KEY}}",
+          "description": "Bucket credentials",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_EVENT_UPLOAD_FORCE_PATH_STYLE": {
+          "defaultValue": "false",
+          "description": "Railway buckets use virtual-host style addressing",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_EVENT_UPLOAD_PREFIX": {
+          "defaultValue": "events/",
+          "description": "Key prefix inside the bucket",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_MEDIA_UPLOAD_BUCKET": {
+          "defaultValue": "${{Blobs.BUCKET}}",
+          "description": "Images, audio and files attached to traces go to the bundled Railway bucket - leave as is",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_MEDIA_UPLOAD_ENDPOINT": {
+          "defaultValue": "${{Blobs.ENDPOINT}}",
+          "description": "Bucket endpoint",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_MEDIA_UPLOAD_REGION": {
+          "defaultValue": "${{Blobs.REGION}}",
+          "description": "Bucket region",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_MEDIA_UPLOAD_ACCESS_KEY_ID": {
+          "defaultValue": "${{Blobs.ACCESS_KEY_ID}}",
+          "description": "Bucket credentials",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_MEDIA_UPLOAD_SECRET_ACCESS_KEY": {
+          "defaultValue": "${{Blobs.SECRET_ACCESS_KEY}}",
+          "description": "Bucket credentials",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_MEDIA_UPLOAD_FORCE_PATH_STYLE": {
+          "defaultValue": "false",
+          "description": "Railway buckets use virtual-host style addressing",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_MEDIA_UPLOAD_PREFIX": {
+          "defaultValue": "media/",
+          "description": "Key prefix inside the bucket",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_BUCKET": {
+          "defaultValue": "${{Blobs.BUCKET}}",
+          "description": "CSV/JSON exports go to the bundled Railway bucket - leave as is",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_ENDPOINT": {
+          "defaultValue": "${{Blobs.ENDPOINT}}",
+          "description": "Bucket endpoint",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_REGION": {
+          "defaultValue": "${{Blobs.REGION}}",
+          "description": "Bucket region",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_ACCESS_KEY_ID": {
+          "defaultValue": "${{Blobs.ACCESS_KEY_ID}}",
+          "description": "Bucket credentials",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_SECRET_ACCESS_KEY": {
+          "defaultValue": "${{Blobs.SECRET_ACCESS_KEY}}",
+          "description": "Bucket credentials",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_FORCE_PATH_STYLE": {
+          "defaultValue": "false",
+          "description": "Railway buckets use virtual-host style addressing",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_PREFIX": {
+          "defaultValue": "exports/",
+          "description": "Key prefix inside the bucket",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_ENABLED": {
+          "defaultValue": "true",
+          "description": "Exports are written to the bucket and downloaded from a signed link",
+          "isOptional": false
+        },
+        "NEXTAUTH_SECRET": {
+          "defaultValue": "${{secret(32)}}",
+          "description": "Signs login sessions",
+          "isOptional": false
+        },
+        "LANGFUSE_INIT_USER_EMAIL": {
+          "defaultValue": "",
+          "description": "Your email - the first admin login, created on first boot",
+          "isOptional": false
+        },
+        "LANGFUSE_INIT_USER_NAME": {
+          "defaultValue": "Admin",
+          "description": "Display name of the first admin",
+          "isOptional": false
+        },
+        "LANGFUSE_INIT_USER_PASSWORD": {
+          "defaultValue": "${{secret(20)}}",
+          "description": "Password of the first admin - copy it from here to log in, then change it in Langfuse",
+          "isOptional": false
+        },
+        "LANGFUSE_INIT_ORG_ID": {
+          "defaultValue": "my-org",
+          "description": "ID of the organization created on first boot",
+          "isOptional": false
+        },
+        "LANGFUSE_INIT_ORG_NAME": {
+          "defaultValue": "My Organization",
+          "description": "Name of the organization created on first boot",
+          "isOptional": false
+        },
+        "LANGFUSE_INIT_PROJECT_ID": {
+          "defaultValue": "my-project",
+          "description": "ID of the project created on first boot",
+          "isOptional": false
+        },
+        "LANGFUSE_INIT_PROJECT_NAME": {
+          "defaultValue": "My Project",
+          "description": "Name of the project created on first boot",
+          "isOptional": false
+        },
+        "LANGFUSE_INIT_PROJECT_PUBLIC_KEY": {
+          "defaultValue": "pk-lf-${{secret(32, \"abcdef0123456789\")}}",
+          "description": "Project public key (LANGFUSE_PUBLIC_KEY in your app)",
+          "isOptional": false
+        },
+        "LANGFUSE_INIT_PROJECT_SECRET_KEY": {
+          "defaultValue": "sk-lf-${{secret(32, \"abcdef0123456789\")}}",
+          "description": "Project secret key (LANGFUSE_SECRET_KEY in your app)",
+          "isOptional": false
+        },
+        "AUTH_DISABLE_SIGNUP": {
+          "defaultValue": "true",
+          "description": "Only invited users can join. Set to false to let anyone with the URL sign up",
+          "isOptional": false
+        },
+        "RAILWAY_HEALTHCHECK_TIMEOUT_SEC": {
+          "defaultValue": "600",
+          "description": "First boot runs the Postgres and ClickHouse migrations before the health check can pass",
+          "isOptional": false
+        }
+      },
+      "networking": {
+        "serviceDomains": {
+          "<hasDomain>": {}
+        }
+      }
+    },
+    "75a49c66-7e53-42c8-9fce-5600915403a4": {
+      "icon": "https://langfuse.com/icon.svg",
+      "name": "Worker",
+      "build": {},
+      "deploy": {
+        "startCommand": null,
+        "healthcheckPath": null,
+        "restartPolicyType": "ON_FAILURE",
+        "restartPolicyMaxRetries": 10
+      },
+      "source": {
+        "image": "langfuse/langfuse-worker:4.46.0"
+      },
+      "variables": {
+        "PORT": {
+          "defaultValue": "3030",
+          "description": "Worker health endpoint port - leave as is",
+          "isOptional": false
+        },
+        "DATABASE_URL": {
+          "defaultValue": "postgresql://${{Postgres.POSTGRES_USER}}:${{Postgres.POSTGRES_PASSWORD}}@${{Postgres.RAILWAY_PRIVATE_DOMAIN}}:5432/${{Postgres.POSTGRES_DB}}",
+          "description": "Postgres connection - private network, leave as is",
+          "isOptional": false
+        },
+        "SALT": {
+          "defaultValue": "${{Langfuse.SALT}}",
+          "description": "Salt for hashing API keys - never change after the first deploy",
+          "isOptional": false
+        },
+        "ENCRYPTION_KEY": {
+          "defaultValue": "${{Langfuse.ENCRYPTION_KEY}}",
+          "description": "64 hex chars encrypting stored LLM API keys - never change after the first deploy",
+          "isOptional": false
+        },
+        "NEXTAUTH_URL": {
+          "defaultValue": "${{Langfuse.NEXTAUTH_URL}}",
+          "description": "Public URL of Langfuse - set it to your custom domain when you add one",
+          "isOptional": false
+        },
+        "CLICKHOUSE_URL": {
+          "defaultValue": "http://${{ClickHouse.RAILWAY_PRIVATE_DOMAIN}}:8123",
+          "description": "ClickHouse HTTP endpoint - private network, leave as is",
+          "isOptional": false
+        },
+        "CLICKHOUSE_MIGRATION_URL": {
+          "defaultValue": "clickhouse://${{ClickHouse.RAILWAY_PRIVATE_DOMAIN}}:9000",
+          "description": "ClickHouse native endpoint for migrations - leave as is",
+          "isOptional": false
+        },
+        "CLICKHOUSE_USER": {
+          "defaultValue": "${{ClickHouse.CLICKHOUSE_USER}}",
+          "description": "ClickHouse user - leave as is",
+          "isOptional": false
+        },
+        "CLICKHOUSE_PASSWORD": {
+          "defaultValue": "${{ClickHouse.CLICKHOUSE_PASSWORD}}",
+          "description": "ClickHouse password - leave as is",
+          "isOptional": false
+        },
+        "CLICKHOUSE_CLUSTER_ENABLED": {
+          "defaultValue": "false",
+          "description": "Single-node ClickHouse",
+          "isOptional": false
+        },
+        "REDIS_HOST": {
+          "defaultValue": "${{Redis.RAILWAY_PRIVATE_DOMAIN}}",
+          "description": "Redis host - private network, leave as is",
+          "isOptional": false
+        },
+        "REDIS_PORT": {
+          "defaultValue": "6379",
+          "description": "Redis port",
+          "isOptional": false
+        },
+        "REDIS_AUTH": {
+          "defaultValue": "${{Redis.REDIS_PASSWORD}}",
+          "description": "Redis password - leave as is",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_EVENT_UPLOAD_BUCKET": {
+          "defaultValue": "${{Blobs.BUCKET}}",
+          "description": "Raw ingested events go to the bundled Railway bucket - leave as is",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_EVENT_UPLOAD_ENDPOINT": {
+          "defaultValue": "${{Blobs.ENDPOINT}}",
+          "description": "Bucket endpoint",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_EVENT_UPLOAD_REGION": {
+          "defaultValue": "${{Blobs.REGION}}",
+          "description": "Bucket region",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_EVENT_UPLOAD_ACCESS_KEY_ID": {
+          "defaultValue": "${{Blobs.ACCESS_KEY_ID}}",
+          "description": "Bucket credentials",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_EVENT_UPLOAD_SECRET_ACCESS_KEY": {
+          "defaultValue": "${{Blobs.SECRET_ACCESS_KEY}}",
+          "description": "Bucket credentials",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_EVENT_UPLOAD_FORCE_PATH_STYLE": {
+          "defaultValue": "false",
+          "description": "Railway buckets use virtual-host style addressing",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_EVENT_UPLOAD_PREFIX": {
+          "defaultValue": "events/",
+          "description": "Key prefix inside the bucket",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_MEDIA_UPLOAD_BUCKET": {
+          "defaultValue": "${{Blobs.BUCKET}}",
+          "description": "Images, audio and files attached to traces go to the bundled Railway bucket - leave as is",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_MEDIA_UPLOAD_ENDPOINT": {
+          "defaultValue": "${{Blobs.ENDPOINT}}",
+          "description": "Bucket endpoint",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_MEDIA_UPLOAD_REGION": {
+          "defaultValue": "${{Blobs.REGION}}",
+          "description": "Bucket region",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_MEDIA_UPLOAD_ACCESS_KEY_ID": {
+          "defaultValue": "${{Blobs.ACCESS_KEY_ID}}",
+          "description": "Bucket credentials",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_MEDIA_UPLOAD_SECRET_ACCESS_KEY": {
+          "defaultValue": "${{Blobs.SECRET_ACCESS_KEY}}",
+          "description": "Bucket credentials",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_MEDIA_UPLOAD_FORCE_PATH_STYLE": {
+          "defaultValue": "false",
+          "description": "Railway buckets use virtual-host style addressing",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_MEDIA_UPLOAD_PREFIX": {
+          "defaultValue": "media/",
+          "description": "Key prefix inside the bucket",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_BUCKET": {
+          "defaultValue": "${{Blobs.BUCKET}}",
+          "description": "CSV/JSON exports go to the bundled Railway bucket - leave as is",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_ENDPOINT": {
+          "defaultValue": "${{Blobs.ENDPOINT}}",
+          "description": "Bucket endpoint",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_REGION": {
+          "defaultValue": "${{Blobs.REGION}}",
+          "description": "Bucket region",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_ACCESS_KEY_ID": {
+          "defaultValue": "${{Blobs.ACCESS_KEY_ID}}",
+          "description": "Bucket credentials",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_SECRET_ACCESS_KEY": {
+          "defaultValue": "${{Blobs.SECRET_ACCESS_KEY}}",
+          "description": "Bucket credentials",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_FORCE_PATH_STYLE": {
+          "defaultValue": "false",
+          "description": "Railway buckets use virtual-host style addressing",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_PREFIX": {
+          "defaultValue": "exports/",
+          "description": "Key prefix inside the bucket",
+          "isOptional": false
+        },
+        "LANGFUSE_S3_BATCH_EXPORT_ENABLED": {
+          "defaultValue": "true",
+          "description": "Exports are written to the bucket and downloaded from a signed link",
+          "isOptional": false
+        }
+      },
+      "networking": {
+        "serviceDomains": {}
+      }
+    },
+    "5d3cdf4a-b8f5-464b-af32-2d4129043189": {
+      "icon": "https://devicons.railway.app/i/clickhouse.svg",
+      "name": "ClickHouse",
+      "build": {},
+      "deploy": {
+        "startCommand": null,
+        "healthcheckPath": null,
+        "restartPolicyType": "ON_FAILURE",
+        "restartPolicyMaxRetries": 10
+      },
+      "source": {
+        "repo": "https://github.com/nomideusz/langfuse-railway",
+        "rootDirectory": "/clickhouse"
+      },
+      "variables": {
+        "CLICKHOUSE_USER": {
+          "defaultValue": "langfuse",
+          "description": "ClickHouse user",
+          "isOptional": false
+        },
+        "CLICKHOUSE_PASSWORD": {
+          "defaultValue": "${{secret(32, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
+          "description": "Auto-generated ClickHouse password (letters and digits: it goes into a URL)",
+          "isOptional": false
+        },
+        "RAILWAY_DEPLOYMENT_DRAINING_SECONDS": {
+          "defaultValue": "30",
+          "description": "Time for ClickHouse to flush and shut down cleanly on redeploy",
+          "isOptional": false
+        }
+      },
+      "networking": {
+        "serviceDomains": {}
+      },
+      "volumeMounts": {
+        "5d3cdf4a-b8f5-464b-af32-2d4129043189": {
+          "mountPath": "/var/lib/clickhouse"
+        }
+      }
+    },
+    "52217b4c-ffaa-44ae-a5ad-0d504e7c56b7": {
+      "icon": "https://devicons.railway.app/i/postgresql.svg",
+      "name": "Postgres",
+      "build": {},
+      "deploy": {
+        "startCommand": null,
+        "healthcheckPath": null,
+        "restartPolicyType": "ON_FAILURE",
+        "restartPolicyMaxRetries": 10
+      },
+      "source": {
+        "image": "ghcr.io/railwayapp-templates/postgres-ssl:17"
+      },
+      "variables": {
+        "POSTGRES_DB": {
+          "defaultValue": "langfuse",
+          "description": "Database name",
+          "isOptional": false
+        },
+        "POSTGRES_USER": {
+          "defaultValue": "postgres",
+          "description": "Database user",
+          "isOptional": false
+        },
+        "POSTGRES_PASSWORD": {
+          "defaultValue": "${{secret(32, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
+          "description": "Auto-generated database password (letters and digits: it goes into a URL)",
+          "isOptional": false
+        },
+        "PGDATA": {
+          "defaultValue": "/var/lib/postgresql/data/pgdata",
+          "description": "Data subdirectory - keeps Postgres happy on Railway volumes",
+          "isOptional": false
+        },
+        "RAILWAY_DEPLOYMENT_DRAINING_SECONDS": {
+          "defaultValue": "60",
+          "description": "Time for Postgres to shut down cleanly on redeploy",
+          "isOptional": false
+        }
+      },
+      "networking": {
+        "serviceDomains": {}
+      },
+      "volumeMounts": {
+        "52217b4c-ffaa-44ae-a5ad-0d504e7c56b7": {
+          "mountPath": "/var/lib/postgresql/data"
+        }
+      }
+    },
+    "1e6e6c17-056a-4681-bf16-89e32f552b68": {
+      "icon": "https://devicons.railway.app/i/redis.svg",
+      "name": "Redis",
+      "build": {},
+      "deploy": {
+        "startCommand": "/bin/sh -c \"exec docker-entrypoint.sh redis-server --requirepass $REDIS_PASSWORD --maxmemory-policy noeviction --appendonly yes --dir /data\"",
+        "healthcheckPath": null,
+        "restartPolicyType": "ON_FAILURE",
+        "restartPolicyMaxRetries": 10
+      },
+      "source": {
+        "image": "redis:8.10.2-alpine"
+      },
+      "variables": {
+        "REDIS_PASSWORD": {
+          "defaultValue": "${{secret(32)}}",
+          "description": "Auto-generated Redis password",
+          "isOptional": false
+        }
+      },
+      "networking": {
+        "serviceDomains": {}
+      },
+      "volumeMounts": {
+        "1e6e6c17-056a-4681-bf16-89e32f552b68": {
+          "mountPath": "/data"
+        }
+      }
+    }
+  }
+}

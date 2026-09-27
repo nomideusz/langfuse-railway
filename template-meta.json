@@ -1,0 +1,8 @@
+{
+  "name": "Langfuse 4 | LLM Observability, Evals and Prompt Management",
+  "short_name": "Langfuse 4",
+  "description": "Langfuse v4 with ClickHouse, S3 bucket and API keys ready on first boot",
+  "category": "Observability",
+  "image": "https://langfuse.com/icon.svg",
+  "card_desc": "Langfuse v4 (web, worker, ClickHouse, Postgres, Redis) with traces in a Railway bucket and your API keys ready on first boot."
+}
