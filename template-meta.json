@@ -5,5 +5,6 @@
   "category": "Observability",
   "image": "https://langfuse.com/icon.svg",
   "card_desc": "Langfuse v4 (web, worker, ClickHouse, Postgres, Redis) with traces in a Railway bucket and your API keys ready on first boot.",
-  "id": "e205b976-63c9-4a9b-ad27-f222d347a49d"
+  "id": "e205b976-63c9-4a9b-ad27-f222d347a49d",
+  "published": true
 }
