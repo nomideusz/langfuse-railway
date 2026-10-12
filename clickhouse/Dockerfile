@@ -11,5 +11,8 @@ COPY railway.xml /etc/clickhouse-server/config.d/railway.xml
 # removed in a later layer.
 COPY listen.xml /etc/clickhouse-server/config.d/docker_related_config.xml
 
+# Railway hosts run transparent huge pages "always": jemalloc frees 4K pages
+# inside 2 MB huge pages that stay charged, so idle ClickHouse creeps ~25 MB/min.
 ENV CLICKHOUSE_DB=default \
-    CLICKHOUSE_USER=langfuse
+    CLICKHOUSE_USER=langfuse \
+    MALLOC_CONF=thp:never
