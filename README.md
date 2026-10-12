@@ -1,6 +1,6 @@
 # Deploy and Host Langfuse 4 on Railway
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template/langfuse-4?utm_medium=integration&utm_source=button&utm_campaign=langfuse-4)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template/langfuse-4?referralCode=sLjDXb&utm_medium=integration&utm_source=button&utm_campaign=langfuse-4)
 
 [Langfuse](https://langfuse.com/) is the open-source LLM engineering platform: tracing for every model call, tool call and agent step, prompt management, evaluations, datasets and cost tracking. This template runs Langfuse v4, the current major version, with the same architecture Langfuse Cloud uses: web, worker, ClickHouse, Postgres, Redis and object storage. Your organization, project and API keys exist the moment the deploy finishes.
 
