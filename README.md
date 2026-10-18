@@ -6,7 +6,7 @@
 
 ## About Hosting Langfuse 4
 
-- **The full v4 stack, pinned.** Langfuse web and worker 4.46.0, ClickHouse 25.12, Postgres 17 and Redis 8, all on Railway's private network. Nothing but the web UI has a public address.
+- **The full v4 stack, pinned.** Langfuse web and worker 4.63.0, ClickHouse 25.12, Postgres 17 and Redis 8, all on Railway's private network. Nothing but the web UI has a public address.
 - **Traces in a Railway bucket.** Raw events, media attached to traces and batch exports go to the bundled bucket instead of a MinIO container, so there is no storage service to size or back up.
 - **API keys on first boot.** The first boot creates your admin user, an organization, a project and its public and secret keys. Copy the keys from the Variables tab into your app, no clicking through the UI first.
 - **Closed by default.** Public sign-up is off: only the admin created on first boot can log in until you invite others.
