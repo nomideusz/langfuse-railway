@@ -471,7 +471,7 @@
         "restartPolicyMaxRetries": 10
       },
       "source": {
-        "repo": "https://github.com/nomideusz/langfuse-railway",
+        "repo": "https://github.com/two-workspaces/langfuse",
         "rootDirectory": "/clickhouse"
       },
       "variables": {

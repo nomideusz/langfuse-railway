@@ -31,7 +31,7 @@
 
 - [Langfuse documentation](https://langfuse.com/docs)
 - [Langfuse self-hosting guide](https://langfuse.com/self-hosting)
-- [Template source on GitHub](https://github.com/nomideusz/langfuse-railway)
+- [Template source on GitHub](https://github.com/two-workspaces/langfuse)
 
 ### Implementation Details
 
