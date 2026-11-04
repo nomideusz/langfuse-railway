@@ -1,5 +1,5 @@
 {
-  "name": "Langfuse 4 | LLM Observability, Evals and Prompt Management",
+  "name": "Langfuse",
   "short_name": "Langfuse 4",
   "description": "Langfuse v4 with ClickHouse, S3 bucket and API keys ready on first boot",
   "category": "Observability",
