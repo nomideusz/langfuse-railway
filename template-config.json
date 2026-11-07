@@ -16,7 +16,7 @@
         "restartPolicyMaxRetries": 10
       },
       "source": {
-        "image": "langfuse/langfuse:4.75.0"
+        "image": "langfuse/langfuse:4.76.0"
       },
       "variables": {
         "PORT": {
@@ -277,7 +277,7 @@
         "restartPolicyMaxRetries": 10
       },
       "source": {
-        "image": "langfuse/langfuse-worker:4.75.0"
+        "image": "langfuse/langfuse-worker:4.76.0"
       },
       "variables": {
         "PORT": {
