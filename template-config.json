@@ -16,7 +16,7 @@
     "restartPolicyMaxRetries": 10
    },
    "source": {
-    "image": "langfuse/langfuse:4.77.0"
+    "image": "langfuse/langfuse:4.82.0"
    },
    "variables": {
     "PORT": {
@@ -261,8 +261,8 @@
     },
     "NODE_OPTIONS": {
      "isOptional": true,
-     "description": "Caps the web app's Node.js heap so its first boot fits a 1 GB service (Trial plan). On Hobby with heavy trace volume, raise the number or delete this variable.",
-     "defaultValue": "--max-old-space-size=512"
+     "description": "Caps the web app's Node.js heap at 1 GB. Langfuse 4.78 and later need more than 512 MB just to start. With heavy trace volume, raise the number or delete this variable.",
+     "defaultValue": "--max-old-space-size=1024"
     }
    },
    "networking": {
@@ -282,7 +282,7 @@
     "restartPolicyMaxRetries": 10
    },
    "source": {
-    "image": "langfuse/langfuse-worker:4.77.0"
+    "image": "langfuse/langfuse-worker:4.82.0"
    },
    "variables": {
     "PORT": {
