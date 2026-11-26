@@ -16,7 +16,7 @@
     "restartPolicyMaxRetries": 10
    },
    "source": {
-    "image": "langfuse/langfuse:4.84.0"
+    "image": "langfuse/langfuse:4.86.0"
    },
    "variables": {
     "PORT": {
@@ -282,7 +282,7 @@
     "restartPolicyMaxRetries": 10
    },
    "source": {
-    "image": "langfuse/langfuse-worker:4.84.0"
+    "image": "langfuse/langfuse-worker:4.86.0"
    },
    "variables": {
     "PORT": {
@@ -570,7 +570,7 @@
     "restartPolicyMaxRetries": 10
    },
    "source": {
-    "image": "redis:8.10.3-alpine"
+    "image": "redis:8.12.0-alpine"
    },
    "variables": {
     "REDIS_PASSWORD": {
